@@ -1,0 +1,27 @@
+spring:
+    cloud:
+        stream:
+            kafka:
+                binder:
+                    brokers: localhost:9092
+            bindings:
+                poc-kafka-login-success-input:
+                    destination: poc-kafka_login-success
+                    group: ${spring.application.name}
+                    contentType: application/json
+                    consumer:
+                        maxAttempts: 3
+                poc-kafka-login-failure-input:
+                    destination: poc-kafka_login-failure
+                    group: ${spring.application.name}
+                    contentType: application/json
+                    consumer:
+                        maxAttempts: 3
+                poc-kafka-logout-input:
+                    destination: poc-kafka_logout
+                    group: ${spring.application.name}
+                    contentType: application/json
+                    consumer:
+                        maxAttempts: 3
+    application:
+        name: poc-kafka
