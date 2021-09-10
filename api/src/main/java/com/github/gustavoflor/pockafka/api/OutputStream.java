@@ -11,6 +11,10 @@ public interface OutputStream {
     String LOGIN_FAILURE = "poc-kafka-login-failure-output";
     String LOGOUT = "poc-kafka-logout-output";
 
+    String LOGIN_SUCCESS_MESSAGE = "Hello %s!!!";
+    String LOGIN_FAILURE_MESSAGE = "Oh no, %s are not logged...";
+    String LOGOUT_MESSAGE = "Bye :((";
+
     @Output(OutputStream.LOGIN_SUCCESS)
     MessageChannel loginSuccessOutput();
 
