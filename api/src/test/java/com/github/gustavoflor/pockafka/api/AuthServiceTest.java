@@ -9,6 +9,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.messaging.Message;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,8 +24,8 @@ public class AuthServiceTest extends AbstractBaseTest {
 
     private AuthService authService;
 
-    @Mock
-    private Random random = Mockito.spy(new Random());
+    @Spy
+    private Random random;
 
     @Captor
     private ArgumentCaptor<Message<?>> argumentCaptorKfkaSend;
