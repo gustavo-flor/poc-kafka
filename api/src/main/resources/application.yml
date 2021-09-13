@@ -3,22 +3,25 @@ spring:
         stream:
             kafka:
                 binder:
+                    autoAddPartitions: true
                     brokers: localhost:9092
             bindings:
                 poc-kafka-login-success-output:
                     destination: poc-kafka_login-success
                     contentType: application/json
                     producer:
-                        partitionCount: 9
+                        partition-key-expression: headers['partitionKey']
+                        partition-count: 9
                 poc-kafka-login-failure-output:
                     destination: poc-kafka_login-failure
                     contentType: application/json
                     producer:
-                        partitionCount: 9
+                        partition-key-expression: headers['partitionKey']
+                        partition-count: 9
                 poc-kafka-logout-output:
                     destination: poc-kafka_logout
                     contentType: application/json
                     producer:
-                        partitionCount: 9
+                        partition-count: 9
     application:
         name: poc-kafka

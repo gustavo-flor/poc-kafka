@@ -41,7 +41,7 @@ public class AuthServiceTest extends AbstractBaseTest {
     public void shouldSendLoginSuccessMessage() {
         Mockito.when(random.nextBoolean()).thenReturn(true);
         final String name = "John Marston";
-        authService.login(new Credentials(name));
+        authService.login(name);
 
         verify(loginSuccessOutput).send(argumentCaptorKfkaSend.capture());
 
@@ -52,7 +52,7 @@ public class AuthServiceTest extends AbstractBaseTest {
     public void shouldSendLoginFailureMessage() {
         Mockito.when(random.nextBoolean()).thenReturn(false);
         final String name = "John Marston";
-        authService.login(new Credentials(name));
+        authService.login(name);
 
         verify(loginFailureOutput).send(argumentCaptorKfkaSend.capture());
 

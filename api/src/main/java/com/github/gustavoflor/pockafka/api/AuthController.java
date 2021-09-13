@@ -17,7 +17,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody final Credentials credentials) {
         log.info("Accepted a login request with {}", credentials.getName());
-        return authService.login(credentials)
+        return authService.login(credentials.getName())
                 ? ResponseEntity.ok().build()
                 :  ResponseEntity.badRequest().build();
     }
