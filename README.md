@@ -42,6 +42,6 @@ Este endpoint pode retornar randomicamente um dos dois status `200` ou `400`, ca
 
 Este endpoint retorna status `200` e gera uma mensagem para o Kafka no tópico `poc-kafka_logout`.
 
-## Chegamos ao fim :(
+## Chegamos ao fim 🎉
 
 Fique a vontade para contribuir com essa POC implementando novos conceitos, até maisss!!
