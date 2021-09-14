@@ -4,24 +4,30 @@ spring:
             kafka:
                 binder:
                     brokers: localhost:9092
+                bindings:
+                    poc-kafka-logout-input:
+                        consumer:
+                            enableDlq: true
+                            dlqName: poc-kafka_logout-DLQ
+                            autoCommitOnError: true
+                            autoCommitOffset: true
             bindings:
                 poc-kafka-login-success-input:
                     destination: poc-kafka_login-success
                     group: ${spring.application.name}
                     contentType: application/json
-                    consumer:
-                        maxAttempts: 3
                 poc-kafka-login-failure-input:
                     destination: poc-kafka_login-failure
                     group: ${spring.application.name}
                     contentType: application/json
-                    consumer:
-                        maxAttempts: 3
                 poc-kafka-logout-input:
                     destination: poc-kafka_logout
                     group: ${spring.application.name}
                     contentType: application/json
                     consumer:
                         maxAttempts: 3
+                        backOffInitialInterval: 100
+                        backOffMaxInterval: 1000
+                        backOffMultiplier: 2.0
     application:
         name: poc-kafka

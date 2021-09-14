@@ -6,7 +6,9 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
@@ -37,9 +39,15 @@ public class AuthListener {
     }
 
     @StreamListener(InputStream.LOGOUT)
-    public void logoutListener(@Payload final String payload, @Header(required = false, name = "correlationId") final byte[] correlationIdHeader) {
+    public void logoutListener(@Payload final String payload,
+                               @Header(required = false, name = "correlationId") final byte[] correlationIdHeader,
+                               @Header(required = false, name = "deliveryAttempt") final AtomicInteger deliveryAttempt) {
         final UUID correlationId = UUID.fromString(new String(correlationIdHeader));
-        log("Logout", correlationId, payload, "HAS NOT PARTITION KEY");
+        if (hasTeapot()) {
+            log("Logout with Failure, attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
+            throw new WorkerException();
+        }
+        log("Logout with Success, attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
     }
 
     private void log(final String context , final UUID correlationId, final String payload, final String partitionKey) {
@@ -47,6 +55,10 @@ public class AuthListener {
         log.info("Correlation ID: {}", correlationId);
         log.info("Payload: {}", payload);
         log.info("Partition Key: {}", partitionKey);
+    }
+
+    private boolean hasTeapot() {
+        return new Random().nextBoolean();
     }
 
 }
