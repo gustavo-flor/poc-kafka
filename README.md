@@ -2,9 +2,8 @@
 
 Serviços desenvolvidos para aplicar os conceitos do Apache Kafka.
 
-`api`: Utilizado como um [_producer_](https://docs.confluent.io/platform/current/clients/producer.html) das mensagens que serão enviadas para os tópicos do nosso broker. 
-
-`worker`: Utilizado como um [_consumer_](https://docs.confluent.io/platform/current/clients/consumer.html)
+- `api`: Utilizado como [_producer_](https://docs.confluent.io/platform/current/clients/producer.html) do projeto.
+- `worker`: Utilizado como [_consumer_](https://docs.confluent.io/platform/current/clients/consumer.html) do projeto.
 
 ---
 
