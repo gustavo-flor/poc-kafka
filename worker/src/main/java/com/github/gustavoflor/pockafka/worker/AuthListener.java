@@ -1,5 +1,6 @@
 package com.github.gustavoflor.pockafka.worker;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Header;
@@ -12,7 +13,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AuthListener {
+
+    private final Random random;
 
     @StreamListener(value = InputStream.LOGIN_SUCCESS, condition = "'mobile' eq headers['device']")
     public void mobileLoginSuccessListener(@Payload final String payload,
@@ -44,10 +48,10 @@ public class AuthListener {
                                @Header(required = false, name = "deliveryAttempt") final AtomicInteger deliveryAttempt) {
         final UUID correlationId = UUID.fromString(new String(correlationIdHeader));
         if (hasTeapot()) {
-            log("Logout with Failure, attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
+            log("Logout, failure on listen with attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
             throw new WorkerException();
         }
-        log("Logout with Success, attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
+        log("Logout, success on listen with attempts: " + deliveryAttempt.get(), correlationId, payload, "HAS NOT PARTITION KEY");
     }
 
     private void log(final String context , final UUID correlationId, final String payload, final String partitionKey) {
@@ -58,7 +62,7 @@ public class AuthListener {
     }
 
     private boolean hasTeapot() {
-        return new Random().nextBoolean();
+        return random.nextBoolean();
     }
 
 }
