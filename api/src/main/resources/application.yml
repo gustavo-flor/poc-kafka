@@ -4,7 +4,7 @@ spring:
             kafka:
                 binder:
                     autoAddPartitions: true
-                    brokers: localhost:9092
+                    brokers: localhost:9093
             bindings:
                 poc-kafka-login-success-output:
                     destination: poc-kafka_login-success

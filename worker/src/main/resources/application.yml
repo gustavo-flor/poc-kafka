@@ -3,7 +3,7 @@ spring:
         stream:
             kafka:
                 binder:
-                    brokers: localhost:9092
+                    brokers: localhost:9093
                 bindings:
                     poc-kafka-logout-input:
                         consumer:
