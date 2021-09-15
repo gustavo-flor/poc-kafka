@@ -9,13 +9,15 @@ Serviços desenvolvidos para aplicar os conceitos do Apache Kafka.
 
 ## Dependências
 
-- É necessário estar rodando um broker do Kafka no endereço `localhost:9092`.
+- Necessário ter o `docker-compose -v` funcionando corretamente.
 
 ## Passo a passo
 
 - Clone o repositório (`$ git clone git@github.com:gustavo-flor/poc-kafka.git`);
 
 - Acesse a pasta clonada (`$ cd poc-kafka`) 🗃️;
+
+- Execute o `docker-compose up -d` para subir o broker do Kafka com Zookeeper;
 
 - Acesse o subprojeto `api` e execute o comando (`$ ./mvnw spring-boot:run`), **necessário ter a porta 8080 disponível**;
 
