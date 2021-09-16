@@ -20,30 +20,30 @@ public class AuthService {
     private final OutputStream outputStream;
     private final Random random;
 
-    public boolean login(String name) {
+    public boolean login(Credentials credentials) {
         if (hasTeapot()) {
-            outputStream.loginSuccessOutput().send(createMessage(String.format(OutputStream.LOGIN_SUCCESS_MESSAGE, name), name));
+            outputStream.loginSuccessOutput().send(createMessage(credentials));
             log.info("Login Successful");
             return true;
         }
 
-        outputStream.loginFailureOutput().send(createMessage(String.format(OutputStream.LOGIN_FAILURE_MESSAGE, name), name));
+        outputStream.loginFailureOutput().send(createMessage(credentials));
         log.info("Login Failure");
         return false;
     }
 
-    public void logout() {
-        outputStream.logoutOutput().send(createMessage(OutputStream.LOGOUT_MESSAGE, null));
+    public void logout(final Credentials credentials) {
+        outputStream.logoutOutput().send(createMessage(credentials));
         log.info("Logout Successful");
     }
 
-    private Message<String> createMessage(final String payload, final String partitionKey) {
+    private Message<Credentials> createMessage(final Credentials credentials) {
         final Map<String, Object> headers = new HashMap<>();
         headers.put("correlationId", getCorrelationId());
         headers.put("device", hasTeapot() ? "web" : "mobile");
-        headers.put("partitionKey", partitionKey);
+        headers.put("partitionKey", credentials.getName());
 
-        return MessageBuilder.createMessage(payload, new MessageHeaders(headers));
+        return MessageBuilder.createMessage(credentials, new MessageHeaders(headers));
     }
 
     private boolean hasTeapot() {

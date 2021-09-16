@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -28,7 +27,7 @@ public class AuthServiceTest extends AbstractBaseTest {
     private Random random;
 
     @Captor
-    private ArgumentCaptor<Message<?>> argumentCaptorKfkaSend;
+    private ArgumentCaptor<Message<?>> argumentCaptorKafkaSend;
 
     @Before
     public void before() {
@@ -40,32 +39,33 @@ public class AuthServiceTest extends AbstractBaseTest {
     @Test
     public void shouldSendLoginSuccessMessage() {
         Mockito.when(random.nextBoolean()).thenReturn(true);
-        final String name = "John Marston";
-        authService.login(name);
+        final Credentials credentials = new Credentials("John Marston");
+        authService.login(credentials);
 
-        verify(loginSuccessOutput).send(argumentCaptorKfkaSend.capture());
+        verify(loginSuccessOutput).send(argumentCaptorKafkaSend.capture());
 
-        assertEquals(String.format(OutputStream.LOGIN_SUCCESS_MESSAGE, name), argumentCaptorKfkaSend.getValue().getPayload());
+        assertEquals(credentials, argumentCaptorKafkaSend.getValue().getPayload());
     }
 
     @Test
     public void shouldSendLoginFailureMessage() {
         Mockito.when(random.nextBoolean()).thenReturn(false);
-        final String name = "John Marston";
-        authService.login(name);
+        final Credentials credentials = new Credentials("John Marston");
+        authService.login(credentials);
 
-        verify(loginFailureOutput).send(argumentCaptorKfkaSend.capture());
+        verify(loginFailureOutput).send(argumentCaptorKafkaSend.capture());
 
-        assertEquals(String.format(OutputStream.LOGIN_FAILURE_MESSAGE, name), argumentCaptorKfkaSend.getValue().getPayload());
+        assertEquals(credentials, argumentCaptorKafkaSend.getValue().getPayload());
     }
 
     @Test
     public void shouldSendLogoutMessage() {
-        authService.logout();
+        final Credentials credentials = new Credentials();
+        authService.logout(credentials);
 
-        verify(logoutOutput).send(argumentCaptorKfkaSend.capture());
+        verify(logoutOutput).send(argumentCaptorKafkaSend.capture());
 
-        assertEquals(OutputStream.LOGOUT_MESSAGE, argumentCaptorKfkaSend.getValue().getPayload());
+        assertEquals(credentials, argumentCaptorKafkaSend.getValue().getPayload());
     }
 
 

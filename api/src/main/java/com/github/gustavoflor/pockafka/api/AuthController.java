@@ -17,7 +17,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody final Credentials credentials) {
         log.info("Accepted a login request with {}", credentials.getName());
-        return authService.login(credentials.getName())
+        return authService.login(credentials)
                 ? ResponseEntity.ok().build()
                 :  ResponseEntity.badRequest().build();
     }
@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/logout")
     public void logout() {
         log.info("Accepted a logout request");
-        authService.logout();
+        authService.logout(new Credentials());
     }
 
 

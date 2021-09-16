@@ -19,9 +19,9 @@ Serviços desenvolvidos para aplicar os conceitos do Apache Kafka.
 
 - Execute o `docker-compose up -d` para subir o broker do Kafka com Zookeeper;
 
-- Acesse o subprojeto `api` e execute o comando (`$ ./mvnw spring-boot:run`), **necessário ter a porta 8080 disponível**;
+- Acesse o subprojeto `api` e execute o comando (`$ ./../mvnw spring-boot:run`), **necessário ter a porta 8080 disponível**;
 
-- Acesse o subprojeto `worker` e execute o comando (`$ ./mvnw spring-boot:run`); 
+- Acesse o subprojeto `worker` e execute o comando (`$ ./../mvnw spring-boot:run`); 
 
 - Estamos prontos para utilizar a aplicação 🎉.
 
